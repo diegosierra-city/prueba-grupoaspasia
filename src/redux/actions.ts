@@ -1,13 +1,36 @@
-// actions.ts
+import axios from 'axios'
+import { AppState, Book } from './interfaces';
 
 export enum ActionTypes {
- SET_DATA = 'SET_DATA',
+ ALL_BOOKS = 'ALL_BOOKS',
+ BOOK = 'BOOK',
+ FILTER = 'FILTER',
+ ORDER = 'ORDER',
+ PAGE = 'PAGE',
+ ADD_BOOK = 'ADD_BOOK',
+ AUTHORS = 'AUTHORS'
 }
 
-export interface SetDataAction {
- type: ActionTypes.SET_DATA;
- payload: string; 
+export interface AllBooksAction {
+ type: ActionTypes.ALL_BOOKS;
+ payload: Book[]; 
 }
+export const allBooks = () => {
+ return async (dispatch: any) => {
+   try {
+     const res = await axios.get('https://anapioficeandfire.com/api/books');
+
+     dispatch({
+       type: ActionTypes.ALL_BOOKS,
+       payload: res.data
+     });
+
+   } catch (e) {
+     console.log(e);
+   }
+ }
+}
+
 
 export type AppActions = 
- | SetDataAction;
+ | AllBooksAction;

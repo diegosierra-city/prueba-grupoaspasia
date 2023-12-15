@@ -1,13 +1,18 @@
 import { useState } from 'react'
 import './App.css'
 
+import Home from './pages/Home'
+import {Routes, Route, useLocation} from 'react-router-dom';
+
 function App() {
  
 
   return (
-    <>
-      Hola
-    </>
+    <div className='App'>
+     <Routes>
+      <Route path='/' element={<Home/>}/>
+     </Routes>
+    </div>
   )
 }
 

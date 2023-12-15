@@ -1,21 +1,25 @@
 import { ActionTypes } from './actions';
-//import { AppState } from './interfaces';
+import { AppState } from './interfaces';
 
-
-interface AppState {
- data: string;
-}
 
 const initialState: AppState = {
   // estado inicial
-  data: 'hola'
+  listBooks: [],
+  listAllBooks: [],
+  book: null,
+  listAuthors: [],
+  filter: 'all',
 };
 
 export function appReducer(state = initialState, action:any) {
   switch(action.type) {
-    case ActionTypes.SET_DATA:
-      // actualizar estado
-      break;
+    case ActionTypes.ALL_BOOKS:
+      return {
+        ...state,
+        listBooks: [...action.payload],
+        listAllBooks: [...action.payload],
+      };
+      
 
     default: 
        return state;
