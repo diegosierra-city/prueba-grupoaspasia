@@ -18,7 +18,7 @@ export interface AllBooksAction {
 export const allBooks = () => {
  return async (dispatch: any) => {
    try {
-     const res = await axios.get('https://anapioficeandfire.com/api/books');
+     const res = await axios.get('https://anapioficeandfire.com/api/books?page=1&pageSize=10');
 
      dispatch({
        type: ActionTypes.ALL_BOOKS,
