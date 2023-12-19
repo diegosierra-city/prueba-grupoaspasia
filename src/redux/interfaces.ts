@@ -18,4 +18,5 @@ export interface Book {
    book: Book | null;
    listAuthors: string[];
    filter: string;
+   page: number;
  }

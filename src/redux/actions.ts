@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AppState, Book } from './interfaces';
+import { Book } from './interfaces';
 
 export enum ActionTypes {
  ALL_BOOKS = 'ALL_BOOKS',
@@ -8,7 +8,7 @@ export enum ActionTypes {
  ORDER = 'ORDER',
  PAGE = 'PAGE',
  ADD_BOOK = 'ADD_BOOK',
- AUTHORS = 'AUTHORS'
+ AUTHORS = 'AUTHORS',
 }
 
 export interface AllBooksAction {
@@ -18,8 +18,8 @@ export interface AllBooksAction {
 export const allBooks = () => {
  return async (dispatch: any) => {
    try {
-     const res = await axios.get('https://anapioficeandfire.com/api/books?page=1&pageSize=10');
-
+     const res = await axios.get('https://anapioficeandfire.com/api/books?page=1&pageSize=50');
+     console.log('lista completa API',res);
      dispatch({
        type: ActionTypes.ALL_BOOKS,
        payload: res.data

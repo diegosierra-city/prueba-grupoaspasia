@@ -9,12 +9,12 @@ const initialState: AppState = {
   book: null,
   listAuthors: [],
   filter: 'all',
+  page: 1
 };
 
 export function appReducer(state = initialState, action:any) {
   switch(action.type) {
     case ActionTypes.ALL_BOOKS:
-      console.log('lista completa',action.payload);
       return {
         ...state,
         listBooks: [...action.payload],
