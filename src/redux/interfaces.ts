@@ -10,6 +10,7 @@ export interface Book {
    released: string;
    characters: string[];
    povCharacters: string[];
+   favorite: boolean;
  }
  
  export interface AppState {

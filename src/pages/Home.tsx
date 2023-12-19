@@ -26,8 +26,10 @@ import type { Book, AppState } from '../redux/interfaces'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { allBooks } from "../redux/actions";
+import { Link } from 'react-router-dom';
 
-
+import { BiSolidBookHeart, BiBookHeart, BiSolidHeart } from "react-icons/bi";
+import { toggleToCookie } from '../utilities/cookie';
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -91,6 +93,12 @@ export default function Home() {
             cell: info => info.getValue(),
             footer: props => props.column.id,
           },
+          {
+            accessorKey: 'favorite',
+            header: () => <BiSolidHeart />,
+            cell: info => info.getValue(),
+            footer: props => props.column.id,
+          },
                   
     ],
     []
@@ -136,6 +144,15 @@ export default function Home() {
    //dispatch({ type: "FETCH_AUTHORS" });
   }
   , []);
+
+  async function toggleFavorite(position:number){
+    console.log('Row',data[position])
+    //const favorite:boolean = data[position]['favorite']
+    const isbn:string = data[position]['isbn']; 
+    
+    await toggleToCookie('favorities',isbn)
+    dispatch(allBooks());    
+  }
 
   return (
     <div className="p-2">
@@ -188,19 +205,30 @@ export default function Home() {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map(row => {
+          {table.getRowModel().rows.map((row,i) => {
+            //console.log('LinkROW:',row.original['url'])
             return (
               <tr key={row.id}>
                 {row.getVisibleCells().map(cell => {
-                  return (
+                  //console.log('celda:',cell)
+                  return (cell.column.id === 'name'? (
+                    <td key={cell.id}>
+                      <Link className='links' to={`/detail/${row?.original['url']?.split('/').slice(-1)[0]}`}>{flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}</Link>
+                                            
+                    </td>) : (
                     <td key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
                       )}
-                    </td>
-                  )
-                })}
+                      {cell.column.id === 'favorite' && (cell.getValue()? <BiSolidBookHeart size='25px' color="#ff0000" className="cursor-pointer" onClick={()=> toggleFavorite(i)} /> : <BiBookHeart size='25px' color="#444" className="cursor-pointer" onClick={()=> toggleFavorite(Number(cell.id.split('_')[0]))} />)}
+                      
+                    </td>)                   
+                )}
+                )}
               </tr>
             )
           })}
@@ -336,7 +364,7 @@ function Filter({
       </div>
       <div className="h-1" />
     </div>
-  ) : (
+  ) : column.id === 'favorite' ? null : (
     <>
       <datalist id={column.id + 'list'}>
         {sortedUniqueValues.slice(0, 5000).map((value: any) => (

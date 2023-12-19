@@ -1,7 +1,9 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+ @apply w-full absolute top-0
+}
+
+.container{
+  @apply !w-11/12 sm:!w-8/12 mx-auto mt-4
 }
 
 .tabla-primary th {
@@ -21,4 +23,8 @@ input {
 }
 select {
   @apply rounded-md !text-primary !px-3 !py-0 !my-1 bg-gray
+}
+
+.links{
+  @apply text-white hover:text-secondary
 }

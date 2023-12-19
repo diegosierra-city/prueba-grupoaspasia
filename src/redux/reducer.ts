@@ -21,6 +21,12 @@ export function appReducer(state = initialState, action:any) {
         listAllBooks: [...action.payload],
       };
       
+case ActionTypes.BOOK:
+      return {
+        ...state,
+        book: {...action.payload}
+      };
+
 
     default: 
        return state;

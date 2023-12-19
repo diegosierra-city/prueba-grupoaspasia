@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  @apply bg-primary border-b-2 border-b-secondary
+  @apply bg-primary border-b-2 border-b-secondary w-full
 }
 
 

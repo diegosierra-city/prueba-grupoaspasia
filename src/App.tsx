@@ -4,7 +4,10 @@ import './App.css'
 
 import Home from './pages/Home'
 import AddBook from './pages/AddBook';
+import Detail from './pages/Detail';
+import Favorites from './pages/Favorites';
 import { Header } from './stories/Header/Header';
+
 
 function App() {
  
@@ -15,10 +18,15 @@ function App() {
      user= {'Diego'}
      onLogin = {true} 
       />
-     <Routes>
+      <section className='container'>
+<Routes>
       <Route path='/' element={<Home/>}/>
 <Route path='/addbook' element={<AddBook/>}/>
+<Route path='/detail/:id' element={<Detail/>}/>
+<Route path='/favorites' element={<Favorites/>}/>
      </Routes>
+      </section>
+     
     </div>
   )
 }
