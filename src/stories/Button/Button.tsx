@@ -1,4 +1,3 @@
-import React from 'react';
 import './button.css';
 
 interface ButtonProps {
@@ -6,6 +5,8 @@ interface ButtonProps {
    * Is this the principal call to action on the page?
    */
   primary?: boolean;
+  //
+  type?: 'button' | 'submit';
   /**
    * What background color to use
    */
@@ -29,6 +30,7 @@ interface ButtonProps {
  */
 export const Button = ({
   primary = false,
+  type = 'button',
   size = 'medium',
   backgroundColor,
   label,
@@ -37,7 +39,7 @@ export const Button = ({
   const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
   return (
     <button
-      type="button"
+      type={type}
       className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
       style={{ backgroundColor }}
       {...props}

@@ -78,6 +78,29 @@ export const clearBook = () => {
   }
  }
 
+ export interface AddBookAction {
+  type: ActionTypes.ADD_BOOK;
+  payload: Book;
+ }
+ export const addBook = (book:Book) => {
+  console.log('enviando',book)
+  /*
+  return async (dispatch: any) => {
+    try {
+      const response = await axios.post(`https://anapioficeandfire.com/api/books/`,book);
+      console.log('Detalle',response.data);
+      dispatch({
+        type: ActionTypes.ADD_BOOK,
+        payload: response.data as Book
+      });
+ 
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  */
+ }
+
  export interface FavoriteAction {
   type: ActionTypes.FAVORITE;
   payload: Book;

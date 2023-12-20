@@ -9,12 +9,22 @@
 
 
 input {
-  @apply rounded-md !text-primary !px-3 !py-0 !my-1
+  @apply rounded-md !text-primary !px-3 !py-0 !m-1
 }
 select {
-  @apply rounded-md !text-primary !px-3 !py-0 !my-1 bg-gray
+  @apply rounded-md !text-primary !px-3 !py-0 !m-1 bg-gray
 }
 
 .links{
   @apply text-white hover:text-secondary
+}
+
+.formulario{
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-2 border border-dimgray p-4 rounded-md
+}
+.formulario span{
+  @apply text-red text-sm block
+}
+.formulario label{
+  @apply block text-secondary
 }
