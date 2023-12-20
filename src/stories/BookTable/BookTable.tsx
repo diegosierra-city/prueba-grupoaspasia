@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo, InputHTMLAttributes } from 'react';
+import './BookTable.css';
 import {
   Column,
   Table,
@@ -197,7 +198,7 @@ const columns = useMemo<ColumnDef<Book>[]>(
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row,i) => {
+          {table.getRowModel().rows.map((row) => {
             //console.log('LinkROW:',row.original['url'])
             return (
               <tr key={row.id}>
@@ -261,15 +262,15 @@ const columns = useMemo<ColumnDef<Book>[]>(
 
 <div className="mt-3 flex items-center justify-center gap-2 ">
         <div className="flex items-center gap-1">
-          <div>Page</div>
+          <div>Pagina</div>
           <strong>
-            {table.getState().pagination.pageIndex + 1} of{' '}
+            {table.getState().pagination.pageIndex + 1} de {' '}
             {table.getPageCount()}
           </strong>
         </div>
         
         <span className="flex items-center gap-1">
-          | Go to page:
+          | Ir a la página:
           <input
             type="number"
             defaultValue={table.getState().pagination.pageIndex + 1}
@@ -288,7 +289,7 @@ const columns = useMemo<ColumnDef<Book>[]>(
         >
           {[10, 20, 30, 40, 50].map(pageSize => (
             <option key={pageSize} value={pageSize}>
-              Show {pageSize}
+              Mostrar {pageSize}
             </option>
           ))}
         </select>
