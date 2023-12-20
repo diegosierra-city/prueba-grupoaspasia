@@ -10,13 +10,13 @@ import { Header } from './stories/Header/Header';
 
 
 function App() {
- 
+  let {pathname} = useLocation(); 
 
   return (
     <div className='App'>
       <Header
      user= {'Diego'}
-     onLogin = {true} 
+     location = {pathname} 
       />
       <section className='container'>
 <Routes>

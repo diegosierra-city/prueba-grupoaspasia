@@ -1,5 +1,4 @@
-import React from 'react'
-
+import { useEffect, useState, useMemo, InputHTMLAttributes } from 'react';
 import {
   Column,
   Table,
@@ -22,14 +21,11 @@ import {
   rankItem,
 } from '@tanstack/match-sorter-utils'
 
-import type { Book, AppState } from '../redux/interfaces'
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { allBooks } from "../redux/actions";
+import type { Book} from '../../redux/interfaces'
 import { Link } from 'react-router-dom';
 
 import { BiSolidBookHeart, BiBookHeart, BiSolidHeart } from "react-icons/bi";
-import { toggleToCookie } from '../utilities/cookie';
+import { toggleToCookie } from '../../utilities/cookie';
 
 declare module '@tanstack/table-core' {
   interface FilterFns {
@@ -55,56 +51,55 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 
 
 
-export default function Home() {
-  
-  const dispatch:any = useDispatch();
-  
-  const data = useSelector((store: AppState) => store.listBooks);
-  
+export default function BookTable(listBook: any) {
+ //const data = listBook.listBook 
+ const [data, setData] = useState(listBook.listBook)
 
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [globalFilter, setGlobalFilter] = React.useState('')
+ console.log('DataFavTable:',listBook)
+ const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
+  []
+)
+const [globalFilter, setGlobalFilter] = useState('')
 
-  const columns = React.useMemo<ColumnDef<Book>[]>(
-    () => [
-      
-          {
-            accessorKey: 'name',
-            header: () => 'Titulo',
-            cell: info => info.getValue(),
-            footer: props => props.column.id,
-          },
-          {
-            header: () =>  'Autor', 
-            accessorKey: 'authors', 
-            accessorFn: (row) => row.authors.join(", "), 
-          },
-          {
-            accessorKey: 'country',
-            header: () => 'País',
-            cell: info => info.getValue(),
-            footer: props => props.column.id,
-          },
-          {
-            accessorKey: 'numberOfPages',
-            header: () => 'Cant. Páginas',
-            cell: info => info.getValue(),
-            footer: props => props.column.id,
-          },
-          {
-            accessorKey: 'favorite',
-            header: () => <BiSolidHeart />,
-            cell: info => info.getValue(),
-            footer: props => props.column.id,
-          },
-                  
-    ],
-    []
-  )
+const columns = useMemo<ColumnDef<Book>[]>(
+ () => [
+   
+       {
+         accessorKey: 'name',
+         header: () => 'Titulo',
+         cell: info => info.getValue(),
+         footer: props => props.column.id,
+       },
+       {
+         header: () =>  'Autor', 
+         accessorKey: 'authors', 
+         accessorFn: (row) => row.authors.join(", "), 
+       },
+       {
+         accessorKey: 'country',
+         header: () => 'País',
+         cell: info => info.getValue(),
+         footer: props => props.column.id,
+       },
+       {
+         accessorKey: 'numberOfPages',
+         header: () => 'Cant. Páginas',
+         cell: info => info.getValue(),
+         footer: props => props.column.id,
+       },
+       {
+         accessorKey: 'favorite',
+         header: () => <BiSolidHeart />,
+         cell: info => info.getValue(),
+         footer: props => props.column.id,
+       },
+               
+ ],
+ []
+)
 
-  
+
+   
   const table = useReactTable({
     data,
     columns,
@@ -130,8 +125,8 @@ export default function Home() {
     debugColumns: false,
   })
 
-  React.useEffect(() => {
-    if (table.getState().columnFilters[0]?.id === 'fullName') {
+  useEffect(() => {
+    if (data && table.getState().columnFilters[0]?.id === 'fullName') {
       if (table.getState().sorting[0]?.id !== 'fullName') {
         table.setSorting([{ id: 'fullName', desc: false }])
       }
@@ -139,18 +134,16 @@ export default function Home() {
   }, [table.getState().columnFilters[0]?.id])
 
 
-  useEffect(() => {
-    dispatch(allBooks());
-  }
-  , []);
-
-  async function toggleFavorite(position:number){
-    console.log('Row',data[position])
-    //const favorite:boolean = data[position]['favorite']
-    const isbn:string = data[position]['isbn']; 
-    
-    await toggleToCookie('favorities',isbn)
-    dispatch(allBooks());    
+  function toggleFavorite(position:number){
+    //console.log('Row',data[position])
+    //console.log(data[position]['favorite'])
+    const isbn:string = data[position]['isbn'];     
+   toggleToCookie('favorities',isbn)
+   const updatedBooks = [...data];
+//console.log('fzz',position,updatedBooks[position]['favorite'])
+   updatedBooks[position]['favorite'] = !updatedBooks[position]['favorite'];
+   //console.log('fx',updatedBooks)
+   setData([...updatedBooks])   
   }
 
   return (
@@ -223,7 +216,7 @@ export default function Home() {
                         cell.column.columnDef.cell,
                         cell.getContext()
                       )}
-                      {cell.column.id === 'favorite' && (cell.getValue()? <BiSolidBookHeart size='25px' color="#ff0000" className="cursor-pointer" onClick={()=> toggleFavorite(i)} /> : <BiBookHeart size='25px' color="#444" className="cursor-pointer" onClick={()=> toggleFavorite(Number(cell.id.split('_')[0]))} />)}
+                      {cell.column.id === 'favorite' && (cell.getValue()? <BiSolidBookHeart size='25px' color="#ff0000" className="cursor-pointer" onClick={()=> toggleFavorite(Number(cell.id.split('_')[0]))} /> : <BiBookHeart size='25px' color="#444" className="cursor-pointer" onClick={()=> toggleFavorite(Number(cell.id.split('_')[0]))} />)}
                       
                     </td>)                   
                 )}
@@ -319,7 +312,7 @@ function Filter({
 
   const columnFilterValue = column.getFilterValue()
 
-  const sortedUniqueValues = React.useMemo(
+  const sortedUniqueValues = useMemo(
     () =>
       typeof firstValue === 'number'
         ? []
@@ -393,14 +386,14 @@ function DebouncedInput({
   value: string | number
   onChange: (value: string | number) => void
   debounce?: number
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>) {
-  const [value, setValue] = React.useState(initialValue)
+} & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'>) {
+  const [value, setValue] = useState(initialValue)
 
-  React.useEffect(() => {
+  useEffect(() => {
     setValue(initialValue)
   }, [initialValue])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timeout = setTimeout(() => {
       onChange(value)
     }, debounce)

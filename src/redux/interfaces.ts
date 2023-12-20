@@ -17,7 +17,13 @@ export interface Book {
    listBooks: Book[];
    listAllBooks: Book[];
    book: Book | null;
-   listAuthors: string[];
-   filter: string;
-   page: number;
+   favorites: Book[];
  }
+ 
+ export interface ColumnBook {
+  accessorKey: string
+  header: string,
+  cell: any | null,
+  footer: any | null,
+ } 
+ 

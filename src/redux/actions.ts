@@ -5,11 +5,8 @@ import { getCookie } from '../utilities/cookie';
 export enum ActionTypes {
  ALL_BOOKS = 'ALL_BOOKS',
  BOOK = 'BOOK',
- FILTER = 'FILTER',
- ORDER = 'ORDER',
- PAGE = 'PAGE',
  ADD_BOOK = 'ADD_BOOK',
- AUTHORS = 'AUTHORS',
+ FAVORITE = 'FAVORITE',
 }
 
 export interface AllBooksAction {
@@ -80,6 +77,17 @@ export const clearBook = () => {
     }
   }
  }
+
+ export interface FavoriteAction {
+  type: ActionTypes.FAVORITE;
+  payload: Book;
+ }
+ export const getFavorites = () => {
+  return {
+      type: ActionTypes.FAVORITE,
+      }
+  }
+
 
 
 export type AppActions = 

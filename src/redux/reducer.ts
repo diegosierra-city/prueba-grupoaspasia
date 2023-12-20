@@ -1,5 +1,5 @@
 import { ActionTypes } from './actions';
-import { AppState } from './interfaces';
+import type { AppState,Book } from './interfaces';
 
 
 const initialState: AppState = {
@@ -7,9 +7,7 @@ const initialState: AppState = {
   listBooks: [],
   listAllBooks: [],
   book: null,
-  listAuthors: [],
-  filter: 'all',
-  page: 1
+  favorites: []
 };
 
 export function appReducer(state = initialState, action:any) {
@@ -27,6 +25,13 @@ case ActionTypes.BOOK:
         book: {...action.payload}
       };
 
+case ActionTypes.FAVORITE:
+  const favBooks: Book[] = state.listAllBooks.filter((book:Book) => book.favorite)
+  console.log('todos',state.listBooks)
+      return {
+        ...state,
+        favorites: [...favBooks]
+      };
 
     default: 
        return state;
