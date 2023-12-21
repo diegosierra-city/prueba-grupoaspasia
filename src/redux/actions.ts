@@ -84,6 +84,7 @@ export const clearBook = () => {
  }
  export const addBook = (book:Book) => {
   console.log('enviando',book)
+  alert('enviado')
   /*
   return async (dispatch: any) => {
     try {

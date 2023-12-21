@@ -17,7 +17,7 @@ export default function Favorites() {
         init()
   },[])
 
- // console.log('DataFavvv:',listFavorites)
+ // console.log('DataFav:',listFavorites)
   return (
     <>
     <h1>Favoritos</h1>
