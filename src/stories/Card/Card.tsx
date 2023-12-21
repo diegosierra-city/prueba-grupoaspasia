@@ -1,6 +1,5 @@
 import type { Book } from '../../redux/interfaces';
 
-
 function Card(book:Book) {
 
   return (

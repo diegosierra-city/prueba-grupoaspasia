@@ -6,8 +6,6 @@
   @apply !w-11/12 sm:!w-8/12 mx-auto mt-4
 }
 
-
-
 input {
   @apply rounded-md !text-primary !px-3 !py-0 !m-1
 }

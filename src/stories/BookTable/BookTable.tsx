@@ -154,7 +154,7 @@ const columns = useMemo<ColumnDef<Book>[]>(
           value={globalFilter ?? ''}
           onChange={value => setGlobalFilter(String(value))}
           className="p-2 font-lg shadow border border-block"
-          placeholder="Search all columns..."
+          placeholder="Busqueda general..."
         />
       </div>
       <div className="h-2" />
@@ -368,7 +368,7 @@ function Filter({
         type="text"
         value={(columnFilterValue ?? '') as string}
         onChange={value => column.setFilterValue(value)}
-        placeholder={`Search... (${column.getFacetedUniqueValues().size})`}
+        placeholder={`Buscar... (${column.getFacetedUniqueValues().size})`}
         className="w-36"
         list={column.id + 'list'}
       />

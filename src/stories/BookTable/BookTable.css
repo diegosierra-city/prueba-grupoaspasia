@@ -9,3 +9,14 @@
 .tabla-primary tr {
  @apply even:bg-gray/10;
 }
+
+input {
+ @apply rounded-md !text-primary !px-3 !py-0 !m-1
+}
+select {
+ @apply rounded-md !text-primary !px-3 !py-0 !m-1 bg-gray
+}
+
+.links{
+ @apply text-white hover:text-secondary
+}

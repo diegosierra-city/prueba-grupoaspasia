@@ -53,8 +53,8 @@ expect(getByLabelText('Fecha Publicación:')).toBeInTheDocument();
        expect.objectContaining({
          name: 'My Book',
          isbn: '123456789',
-         authors: 'García Marquez',
-         numberOfPages: '2430',
+         authors: ['García Marquez'],
+         numberOfPages: 2430,
          publisher: 'Planeta',
          country: 'Colombia',
          mediaType: 'Cuero',
